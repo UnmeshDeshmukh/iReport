@@ -1,0 +1,132 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tanvi.ireport.Activity.ListViewFragment">
+
+    <LinearLayout android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.tanvi.ireport.Activity.ListViewFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                android:layout_marginTop="8dp"
+                android:id="@+id/imageView" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="Complaint Status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblStatus"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+            //replace this by dropdown
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statusSpinner"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Severity Level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblSeverity"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:text="Severity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textSeverity"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblSize"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:text="Size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textSize"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblLocation"
+                android:padding="16dp"
+                android:layout_weight="3"/>
+
+            <TextView
+                android:text="Status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textLocation"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDescription"
+                android:padding="16dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

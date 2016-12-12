@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tanvi.ireport.Activity.SettingsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="0dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:elevation="12dp"
+            >
+
+            <TextView
+                android:text="Email Confirmation:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/emailConfigTextView"
+                android:layout_weight="1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:fontFamily="sans-serif"
+                android:typeface="monospace"
+                android:textSize="18sp"
+                android:textColor="@android:color/background_dark" />
+
+            <Switch
+                android:text="Any Litter Report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/litterReportAnySwitch"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1" />
+
+            <Switch
+                android:text="Upon Status Change"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/emailOnStatusChangeSwitch"
+                android:layout_marginTop="15dp" />
+
+            <Switch
+                android:text="Report Anonymously"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/anonymousSwitch"
+                android:layout_weight="1"
+                android:layout_marginTop="15dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:text="Change Settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:id="@+id/changeValues"
+            android:layout_marginBottom="151dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,266 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.EditProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/makeChangesButton"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="55dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/screenNameEditText"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:text="Email:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/firstName"
+
+
+                    android:id="@+id/emailIdTextView"
+                    android:layout_weight="1.08"
+                    android:fontFamily="monospace"
+                    android:typeface="monospace" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/emailEditText"
+                    android:textSize="10sp"
+                    android:layout_alignBaseline="@+id/emailIdTextView"
+                    android:layout_alignBottom="@+id/emailIdTextView"
+                    android:layout_toEndOf="@+id/stateEditText"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/screenName"
+                android:layout_toEndOf="@+id/linearLayout2"
+                android:layout_marginBottom="15dp">
+
+
+                <TextView
+                    android:text="Screen Name:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_weight="0.63"
+                    android:fontFamily="monospace" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/screenNameEditText"
+                    android:layout_alignBottom="@+id/screenName"
+
+                    android:textSize="10sp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:text="First Name:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/firstName"
+                    android:layout_alignTop="@+id/screenName"
+                    android:layout_alignStart="@+id/screenName"
+
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:typeface="monospace" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Name"
+                    android:ems="10"
+                    android:id="@+id/firstNameEditText"
+                    android:layout_alignTop="@+id/firstName"
+                    android:layout_alignStart="@+id/screenNameEditText"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:text="Last Name:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lastName"
+                    android:layout_weight="1.00" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Name"
+                    android:ems="10"
+                    android:id="@+id/lastNameEditText"
+                    android:layout_alignBottom="@+id/lastName"
+
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:text="State:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/stateTextView"
+
+                    android:layout_below="@+id/lastName"
+
+                    android:layout_weight="0.60" />
+
+                <EditText
+                    android:layout_width="30dp"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/stateEditText"
+                    android:layout_above="@+id/phoneNumberTextView"
+
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:text="Phone Number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/stateTextView"
+                    android:layout_alignStart="@+id/stateTextView"
+
+                    android:id="@+id/phoneNumberTextView"
+                    android:layout_weight="0.73" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:layout_alignBottom="@+id/phoneNumberTextView"
+
+
+                    android:id="@+id/phoneNoEditText"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.98" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:text="City:"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/cityNameTextView"
+                    android:layout_alignTop="@+id/cityNameEditText"
+
+                    android:layout_weight="0.64" />
+
+                <EditText
+                    android:layout_width="50dp"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/cityNameEditText"
+                    android:layout_alignTop="@+id/stateTextView"
+
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:text="Edit Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/makeChangesButton"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="82dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirmChangeButton"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="33dp"
+            android:layout_alignRight="@+id/makeChangesButton"
+            android:layout_alignEnd="@+id/makeChangesButton"
+            android:layout_alignLeft="@+id/makeChangesButton"
+            android:layout_alignStart="@+id/makeChangesButton" />
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

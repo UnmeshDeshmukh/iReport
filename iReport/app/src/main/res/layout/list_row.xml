@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        >
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@color/com_facebook_button_background_color"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/reportName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@id/thumbnail"
+        android:text="Report 1"
+        android:textSize="20dip"
+        android:textStyle="bold"
+        android:typeface="sans"
+        />
+    
+    <TextView
+        android:id="@+id/dateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reportName"
+        android:textSize="15dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@id/thumbnail"
+        android:text="12/1/2016 4:00PM"
+        />
+    
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/reportName"
+        android:gravity="right"
+        android:text="still_there"
+        android:layout_marginRight="5dip"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+    
+
+
+</RelativeLayout>
