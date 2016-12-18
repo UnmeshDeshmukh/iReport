@@ -21,9 +21,10 @@ public class GetOperationComplaintReport extends AsyncTask<String,Void,ArrayList
     protected ArrayList<GetComplaintData> doInBackground(String... params) {
         ArrayList<GetComplaintData> complaintReportsArrayList = new ArrayList<>();
 
+
         try{
-            GetComplaintData getComplaintData= new GetComplaintData();
-            URL url = new URL("http://35.164.38.196:3333/getcomplaints");
+
+            URL url = new URL("http://35.164.38.196:3332/getcomplaints");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             int responseCode = httpURLConnection.getResponseCode();
@@ -40,7 +41,8 @@ public class GetOperationComplaintReport extends AsyncTask<String,Void,ArrayList
 
                 JSONArray complaintsArray = jsonObject.getJSONArray("complaints");
                 for(int i=0;i< complaintsArray.length();i++){
-                    //getComplaintData.setId(complaintsArray.getJSONObject(i).getInt("id"));
+                    GetComplaintData getComplaintData = new GetComplaintData();
+                    getComplaintData.setId(complaintsArray.getJSONObject(i).getInt("id"));
                     getComplaintData.setDescrition(complaintsArray.getJSONObject(i).getString("description"));
                     getComplaintData.setPriority(complaintsArray.getJSONObject(i).getString("priority"));
                     getComplaintData.setStatus(complaintsArray.getJSONObject(i).getString("status"));
@@ -55,6 +57,9 @@ public class GetOperationComplaintReport extends AsyncTask<String,Void,ArrayList
                     getComplaintData.setReported_by(complaintsArray.getJSONObject(i).getString("reported_by"));
                     getComplaintData.setCreated_at(complaintsArray.getJSONObject(i).getString("created_at"));
 //                    getComplaintData.setUpdated_at(complaintsArray.getJSONObject(i).getString("updated_by"));
+                    getComplaintData.setImage(complaintsArray.getJSONObject(i).getString("images"));
+
+                    System.out.println("THE PARSED JSON ARRAY:" + complaintsArray.getJSONObject(i).getInt("id") +"Image is : " + complaintsArray.getJSONObject(i).getString("images")+" The lat is" + complaintsArray.getJSONObject(i).getString("longitude") + complaintsArray.getJSONObject(i).getString("latitude"));
                     complaintReportsArrayList.add(getComplaintData);
                 }
                 return complaintReportsArrayList;

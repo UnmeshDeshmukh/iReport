@@ -36,7 +36,7 @@ public class GetComplaintById extends AsyncTask<String , Void, JSONObject> {
         BufferedReader reader = null;
         try{
 
-            URL url = new URL("http://35.164.38.196:3333/getcomplaintsid");
+            URL url = new URL("http://35.164.38.196:3332/getcomplaintsid");
 
 
             httpURLConnection = (HttpURLConnection) url.openConnection();

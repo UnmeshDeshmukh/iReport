@@ -12,7 +12,7 @@
     <string name="nav_notifications">Notifications</string>
     <string name="nav_reportComplaint">Report Complaint</string>
     <string name="nav_logout">Logout</string>
-
+    <string name="hint_search">Searching...</string>
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
         <item>Edit Profile</item>

@@ -5,17 +5,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.tanvi.ireport.Model.GetComplaintData;
 import com.example.tanvi.ireport.R;
 import com.example.tanvi.ireport.Utility.GetDataForMapMarker;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -51,6 +56,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
     MapView mapView;
     JSONObject object;
     GoogleMap googleMaps;
+    GetComplaintData getComplaintData;
     public MapViewFragment() {
         // Required empty public constructor
     }
@@ -90,8 +96,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
         mapMarkerSetUp(mapFragmentView);
         user = getArguments().getString("Email");
         object = callToPost();
-
-
         return mapFragmentView;
 
 
@@ -123,8 +127,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
         try {
             complaintsArray = jsonObject.getJSONArray("complaints");
             for(int i=0;i< complaintsArray.length();i++){
-                //getComplaintData.setId(complaintsArray.getJSONObject(i).getInt("id"));
-                GetComplaintData getComplaintData = new GetComplaintData();
+                //
+                getComplaintData = new GetComplaintData();
+                getComplaintData.setId(complaintsArray.getJSONObject(i).getInt("id"));
                 getComplaintData.setDescrition(complaintsArray.getJSONObject(i).getString("description"));
                 getComplaintData.setPriority(complaintsArray.getJSONObject(i).getString("priority"));
                 getComplaintData.setStatus(complaintsArray.getJSONObject(i).getString("status"));
@@ -139,20 +144,15 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
                 getComplaintData.setReported_by(complaintsArray.getJSONObject(i).getString("reported_by"));
                 getComplaintData.setCreated_at(complaintsArray.getJSONObject(i).getString("created_at"));
 
-               System.out.println("THE PARSED JSON ARRAY:"+complaintsArray.getJSONObject(i).getInt("id")+"The lat is"+complaintsArray.getJSONObject(i).getString("longitude")+complaintsArray.getJSONObject(i).getString("latitude"));
-                googleMaps.addMarker(new MarkerOptions().title(Integer.toString(getComplaintData.getId())).snippet(getComplaintData.getDescrition()).position(new LatLng(Double.parseDouble(getComplaintData.getLatitude()),Double.parseDouble(getComplaintData.getLongitude()))));
-                googleMaps.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                    @Override
-                    public View getInfoWindow(Marker marker) {
-                        return null;
-                    }
+                System.out.println("THE PARSED JSON ARRAY:"+complaintsArray.getJSONObject(i).getInt("id")+"The lat is"+complaintsArray.getJSONObject(i).getString("longitude")+complaintsArray.getJSONObject(i).getString("latitude"));
+                LatLng latLng = new LatLng(Double.parseDouble(getComplaintData.getLatitude()),Double.parseDouble(getComplaintData.getLongitude()));
+                if (i == 0) {
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLng).zoom(13).build();
+                    googleMaps.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
 
-                    @Override
-                    public View getInfoContents(Marker marker) {
 
-                        return null;
-                    }
-                });
                 complaintReportsArrayList.add(getComplaintData);
 
             }
@@ -201,6 +201,48 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         googleMaps = googleMap;
         parseJSON(object,googleMaps);
+        for(int i=0;i<complaintReportsArrayList.size();i++){
+            googleMaps.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                    .title(Integer.toString(complaintReportsArrayList.get(i).getId()))
+                    .snippet(complaintReportsArrayList.get(i).getDescrition())
+                    .position(new LatLng(Double.parseDouble(complaintReportsArrayList.get(i).getLatitude()),Double.parseDouble(complaintReportsArrayList.get(i).getLongitude()))));
+            System.out.println("The Id before:"+complaintReportsArrayList.get(i).getId());
+        }
+        googleMaps.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+            @Override
+            public View getInfoContents(Marker marker) {
+                View v = getActivity().getLayoutInflater().inflate(R.layout.map_info_layout, null);
+                TextView complaintId = (TextView) v.findViewById(R.id.complaintidWindow);
+                TextView description = (TextView) v.findViewById(R.id.descriptionWindow);
+                complaintId.setText(marker.getTitle());
+                System.out.println("The Marker Title:"+marker.getId()+"-----------"+marker.getSnippet());
+                description.setText(marker.getSnippet());
+                return v;
+            }
+        });
+        googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment =new ListViewFragment();
+                Bundle bundle = new Bundle();
+
+                int complaintId = Integer.parseInt(marker.getTitle());
+                System.out.println(complaintId);
+                bundle.putInt("complaintId",complaintId);
+
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(getId(),fragment).commit();
+                return true;
+            }
+        });
+
+
+
     }
 
     /**

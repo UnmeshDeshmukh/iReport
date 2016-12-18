@@ -36,7 +36,7 @@ public class GetDataForMapMarker extends AsyncTask<String,Void,JSONObject> {
         BufferedReader reader = null;
         try{
 
-            URL url = new URL("http://35.164.38.196:3333/getcomplaints");
+            URL url = new URL("http://35.164.38.196:3332/getcomplaints");
 
 
             httpURLConnection = (HttpURLConnection) url.openConnection();

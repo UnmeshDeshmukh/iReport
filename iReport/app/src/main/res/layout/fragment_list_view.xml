@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tanvi.ireport.Activity.ListViewFragment">
+    tools:context="com.example.tanvi.ireport.Activity.ListViewFragment"
+    android:background="@color/cardview_light_background">
 
     <LinearLayout android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +20,7 @@
                 android:layout_height="200dp"
 
                 android:layout_marginTop="8dp"
-                android:id="@+id/imageView" />
+                android:id="@+id/reportImage" />
 
 
 
@@ -105,7 +106,7 @@
                 android:layout_weight="3"/>
 
             <TextView
-                android:text="Status"
+                android:text="Location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textLocation"
@@ -127,6 +128,7 @@
                 android:layout_weight="1"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

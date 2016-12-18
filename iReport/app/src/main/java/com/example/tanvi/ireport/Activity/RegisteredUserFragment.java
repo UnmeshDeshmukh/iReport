@@ -52,15 +52,12 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static int imageCount=0;
     ListView myReportsListView;
-    ArrayList<Report_Item> reportsList;
+    private String[] imagesArray = new String[20];
     FloatingActionButton floatingActionButton;
     String email;
-//    public static final String[] names = new String[]{"Report 1", "Report 2", "Report 3", "Report 4"};
-//    public static final String[] status = new String[]{"Still_there", "Completed", "Still_there", "Still_there"};
-//    public static final String[] dateTime = new String[]{"12/2/2016 9:04PM", "11/25/2016 10.00AM", "5/10/2016 5:00PM", "11/1/2015 2:10PM"};
-//    public static final Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4};
+
     GetComplaintData getComplaintData= new GetComplaintData();
     List<GetComplaintData> complaintReportsArrayList = new ArrayList<GetComplaintData>();
     JSONObject object;
@@ -126,18 +123,8 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
     }
 
     private void setFragmentView(View regView) {
-
-//        reportsList = new ArrayList<Report_Item>();
-
-//        for (int i = 0; i < complaintReportsArrayList.size(); i++) {
-//
-//            Report_Item report_item = new Report_Item(names[i], status[i], dateTime[i], images[i]);
-//            reportsList.add(report_item);
-//        }
         myReportsListView = (ListView) regView.findViewById(R.id.listViewReports);
-//        for(int i=0;i<complaintReportsArrayList.size();i++){
-//            System.out.println("Data----"+complaintReportsArrayList.get(i).getId()+complaintReportsArrayList.get(i).getEmail());
-//        }
+
 
 
 
@@ -145,16 +132,6 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
         ReportsAdapter adapter = new ReportsAdapter(getContext(), (ArrayList)complaintReportsArrayList);
         myReportsListView.setAdapter(adapter);
         myReportsListView.setOnItemClickListener((AdapterView.OnItemClickListener) this);
-//        for(GetComplaintData getComplaintsData:complaintReportsArrayList){
-//            try {
-//               Bitmap bitmap = new ImageLoadTask().execute(String.valueOf(getComplaintsData.getImage())).get();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//            //getComplaintData.setImage(bitmap);
-//        }
 
         floatingActionButton = (FloatingActionButton) regView.findViewById(R.id.mapButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener(){
@@ -199,7 +176,7 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
             complaintsArray = jsonObject.getJSONArray("complaints");
             for (int i = 0; i < complaintsArray.length(); i++) {
                 GetComplaintData getComplaintData = new GetComplaintData();
-                getComplaintData.setId(i);
+                getComplaintData.setId(complaintsArray.getJSONObject(i).getInt("id"));
                 getComplaintData.setPriority(complaintsArray.getJSONObject(i).getString("priority"));
                 getComplaintData.setStatus(complaintsArray.getJSONObject(i).getString("status"));
                 getComplaintData.setLabel(complaintsArray.getJSONObject(i).getString("label"));
@@ -212,8 +189,9 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
                 getComplaintData.setEmail(complaintsArray.getJSONObject(i).getString("email"));
                 getComplaintData.setReported_by(complaintsArray.getJSONObject(i).getString("reported_by"));
                 getComplaintData.setCreated_at(complaintsArray.getJSONObject(i).getString("created_at"));
-
                 getComplaintData.setImage(complaintsArray.getJSONObject(i).getString("images"));
+
+
 
                 System.out.println("THE PARSED JSON ARRAY:" + complaintsArray.getJSONObject(i).getInt("id") + "The lat is" + complaintsArray.getJSONObject(i).getString("longitude") + complaintsArray.getJSONObject(i).getString("latitude"));
                 complaintReportsArrayList.add(getComplaintData);
@@ -222,35 +200,8 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
 
         } catch (JSONException e) {
             e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-
         }
     }
-
-
-//    public static Bitmap getBitmapFromURL(String src) {
-//        try {
-//            Log.e("src",src);
-//            URL url = new URL(src);
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setDoInput(true);
-//            connection.connect();
-//            InputStream input = connection.getInputStream();
-//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-//            Log.e("Bitmap","returned");
-//            return myBitmap;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.e("Exception",e.getMessage());
-//            return null;
-//        }
-//    }
-
-
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -274,13 +225,19 @@ public class RegisteredUserFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+        FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment =new ListViewFragment();
+        Bundle bundle = new Bundle();
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_content,fragment);
+        int complaintId = complaintReportsArrayList.get(i).getId();
+        System.out.println(complaintId);
+        bundle.putInt("complaintId",complaintId);
 
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(this.getId(),fragment).commit();
+
     }
 
     /**

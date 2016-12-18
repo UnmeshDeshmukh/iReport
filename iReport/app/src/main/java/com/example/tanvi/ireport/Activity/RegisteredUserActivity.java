@@ -19,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tanvi.ireport.Model.Report_Item;
@@ -27,6 +29,7 @@ import com.example.tanvi.ireport.R;
 import com.example.tanvi.ireport.Utility.ReportsAdapter;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,7 @@ public class RegisteredUserActivity extends AppCompatActivity
 
 
     private static final String HOMETAB = "home";
+    TextView userNameHamburger;
     private static final String NOTIFICATIONSTAB = "notifications";
     private static final String SETTINGSTAB = "settings";
     private static final String PROFILETAB = "editprofile";
@@ -52,6 +56,7 @@ public class RegisteredUserActivity extends AppCompatActivity
     FloatingActionButton floatingActionButton;
 
     private static String email;
+    private static String TAG="RegisteredUserActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +65,22 @@ public class RegisteredUserActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_resgistered_user);
 
-        //Toast.makeText(getApplicationContext(),"User is : ",Toast.LENGTH_SHORT).show();
 
 
+        Log.d(TAG, "Firebase Token is : "+ FirebaseInstanceId.getInstance().getToken());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView nav = (NavigationView) drawer.findViewById(R.id.nav_view);
+
+
+
+        Intent intent = getIntent();
+        email = intent.getStringExtra("SignedInUser");
+
+
+        System.out.println("The signed in user is:"+email);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -76,7 +90,6 @@ public class RegisteredUserActivity extends AppCompatActivity
         if(savedInstanceState==null){
             navigationItemIndex =0;
             CURRENTTAB = HOMETAB;
-
             Fragment fragment = new HomeFragment();
         }
 
@@ -84,40 +97,23 @@ public class RegisteredUserActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Intent intent = getIntent();
-        email = intent.getStringExtra("SignedInUser");
-        System.out.println("The signed in user is:"+email);
+
     }
 
 
 
     private void setUpNavigationView() {
+        //userNameHamburger.setText(email);
     }
 
     private void loadNavHeader() {
         //TODO ADD USERNAME AND EMAIL ID using the TEXTVIEWS of header
 
+        userNameHamburger = (TextView) findViewById(R.id.textView);
+
+
+
     }
-/*
-* Function which returns tab which was selected by user
- */
-//
-//    private void loadFragment(){
-//        selectNavMenuItem();
-//        setTitleofToolbar();
-//        if(getSupportFragmentManager().findFragmentByTag(CURRENTTAB)!=null){
-//            toggle.syncState();
-//            return;
-//        }
-//
-//        Runnable pendingTasks = new Runnable() {
-//            @Override
-//            public void run() {
-//                Fragment fragment = getHomeFragment();
-//            }
-//        };
-//
-//    }
 
 
     @Override
@@ -178,8 +174,8 @@ public class RegisteredUserActivity extends AppCompatActivity
 
             case R.id.nav_logout: FirebaseAuth.getInstance().signOut();
                                   LoginManager.getInstance().logOut();
-                                    Intent intent = new Intent(RegisteredUserActivity.this,LoginActivity.class);
-                                    startActivity(intent);
+                                  Intent intent = new Intent(RegisteredUserActivity.this,LoginActivity.class);
+                                   startActivity(intent);
                   break;
         }
         if (fragment!=null){

@@ -28,6 +28,7 @@ import com.example.tanvi.ireport.Model.LitterComplaint;
 import com.example.tanvi.ireport.R;
 import com.example.tanvi.ireport.Utility.GetComplaintById;
 import com.example.tanvi.ireport.Utility.GetDataForMapMarker;
+import com.example.tanvi.ireport.Utility.ImageLoadTask;
 import com.example.tanvi.ireport.Utility.PostOperations;
 
 import org.json.JSONArray;
@@ -54,6 +55,7 @@ public class  ListViewFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     LocationManager locationManager;
     LocationListener locationListener;
+    int complaintId;
     Double lat=0.00;
     Double lng =0.00;
     // TODO: Rename and change types of parameters
@@ -105,20 +107,22 @@ public class  ListViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View listView =  inflater.inflate(R.layout.fragment_list_view, container, false);
-        txtSize = (TextView) listView.findViewById(R.id.textSize);
-        txtDescription = (TextView) listView.findViewById(R.id.textDescription);
-        txtLocation = (TextView) listView.findViewById(R.id.textLocation);
-        txtSeverity = (TextView) listView.findViewById(R.id.textSeverity);
         sizeSpinner = (Spinner) listView.findViewById(R.id.statusSpinner);
-
+        txtSeverity = (TextView) listView.findViewById(R.id.textSeverity);
+        txtSize = (TextView) listView.findViewById(R.id.textSize);
+        txtLocation = (TextView) listView.findViewById(R.id.textLocation);
+        txtDescription = (TextView) listView.findViewById(R.id.textDescription);
+        complaintView = (ImageView) listView.findViewById(R.id.reportImage);
+        complaintId = getArguments().getInt("complaintId");
         setSpinner(listView);
-        getCoordinates();
+        //getCoordinates();
         object = getComplaintDetails();
         parseJSON(object);
-        sizeSpinner.setEnabled(false);
-        if(isAtLocation(lat,lng,intentLat,intentLong)){
-            sizeSpinner.setEnabled(true);
-        }
+        setValues();
+        sizeSpinner.setEnabled(true);
+//        if(isAtLocation(lat,lng,intentLat,intentLong)){
+//            sizeSpinner.setEnabled(true);
+//        }
         return listView;
     }
 
@@ -128,6 +132,14 @@ public class  ListViewFragment extends Fragment {
         ArrayAdapter<CharSequence> sizeArrayAdapter = ArrayAdapter.createFromResource(getContext(), R.array.litterStatusArrayUser, android.R.layout.simple_spinner_item);
         sizeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(sizeArrayAdapter);
+//        sizeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                adapterView.getItemAtPosition(i).toString();
+//                callToPost(adapterView.getItemAtPosition(i).toString());
+//            }
+//        });
+
 
         sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -135,7 +147,6 @@ public class  ListViewFragment extends Fragment {
                 adapterView.getItemAtPosition(i).toString();
                 callToPost(adapterView.getItemAtPosition(i).toString());
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -148,7 +159,7 @@ public class  ListViewFragment extends Fragment {
         final JSONObject userDict = new JSONObject();
         JSONObject jsonObject= new JSONObject();
         try{
-            userDict.put("id",id);
+            userDict.put("id",complaintId);
             userDict.put("status",s);
 
         }catch (Exception ex){
@@ -161,7 +172,7 @@ public class  ListViewFragment extends Fragment {
         final JSONObject userDict = new JSONObject();
         JSONObject jsonObject= new JSONObject();
         try{
-            userDict.put("id",id);
+            userDict.put("id",complaintId);
         }catch (Exception ex){
         }
         try {
@@ -194,13 +205,31 @@ public class  ListViewFragment extends Fragment {
                 getComplaintData.setEmail(complaintsArray.getJSONObject(i).getString("email"));
                 getComplaintData.setReported_by(complaintsArray.getJSONObject(i).getString("reported_by"));
                 getComplaintData.setCreated_at(complaintsArray.getJSONObject(i).getString("created_at"));
+                getComplaintData.setImage(complaintsArray.getJSONObject(i).getString("images"));
 //                    getComplaintData.setUpdated_at(complaintsArray.getJSONObject(i).getString("updated_by"));
                 intentLat = Double.parseDouble(getComplaintData.getLatitude());
                 intentLong = Double.parseDouble(getComplaintData.getLongitude());
                 System.out.println("THE PARSED JSON ARRAY:"+complaintsArray.getJSONObject(i).getInt("id")+"The lat is"+complaintsArray.getJSONObject(i).getString("longitude")+complaintsArray.getJSONObject(i).getString("latitude"));
-
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    public void setValues(){
+
+        txtSize.setText(getComplaintData.getSize()==null ?" ":getComplaintData.getSize());
+        txtDescription.setText(getComplaintData.getDescrition()==null ?" ":getComplaintData.getDescrition());
+        txtSeverity.setText(getComplaintData.getPriority() ==null ?" ":getComplaintData.getPriority());
+        txtLocation.setText(getComplaintData.getStreet() ==null ?" ":getComplaintData.getStreet());
+        try {
+            complaintView.setImageBitmap(new ImageLoadTask().execute(getComplaintData.getImage()).get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
     }
@@ -219,12 +248,7 @@ public class  ListViewFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     private void getCoordinates() {

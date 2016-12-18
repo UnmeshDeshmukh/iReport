@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -36,9 +37,15 @@ public class ReportsAdapter extends BaseAdapter {
 
     List<GetComplaintData> reportList;
 
+    //String[] imagesArray;
+
+    String image;
+
+
     public ReportsAdapter(Context context, ArrayList<GetComplaintData> reportList) {
         this.context = context;
         this.reportList = reportList;
+        //this.imagesArray = imagesArray;
     }
 
     private class ViewHolder{
@@ -49,7 +56,6 @@ public class ReportsAdapter extends BaseAdapter {
         TextView textDateTime;
 
     }
-
 
     @Override
     public int getCount() {
@@ -92,32 +98,25 @@ public class ReportsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        Report_Item report = (Report_Item)getItem(position);
-//
-//        holder.textName.setText(report.getName());
-//        holder.textDateTime.setText(report.getDateTime());
-//        holder.textStatus.setText(report.getStatus());
-//        holder.imageView.setImageResource(report.getImageURL());
-
 
 
         GetComplaintData complaintData = (GetComplaintData) getItem(position);
         holder.textName.setText(String.valueOf(complaintData.getId()));
         holder.textDateTime.setText(complaintData.getCreated_at());
         holder.textStatus.setText(complaintData.getStatus());
-//        try {
-////            Bitmap imageBitmap = new ImageLoadTask().execute(String.valueOf(complaintData.getImage())).get();
-//
-//
-//  //          holder.imageView.setImageBitmap(imageBitmap);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            String [] array = complaintData.getImage().split("upload");
+            String url = array[0]+"upload/w_50,h_50"+array[1];
+            Bitmap imageBitmap = new ImageLoadTask().execute(url).get();
+            if(imageBitmap!=null)
+            holder.imageView.setImageBitmap(imageBitmap);
 
+            else
+                System.out.println("Image not formed !!!");
 
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return convertView;
 

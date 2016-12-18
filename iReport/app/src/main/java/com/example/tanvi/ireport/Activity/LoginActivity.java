@@ -3,6 +3,8 @@ package com.example.tanvi.ireport.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,13 +49,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         LoginButton facebookSignIn;
         ProgressDialog progressDialog;
         GoogleApiClient mGoogleApiClient;
+
         private FirebaseAuth firebaseAuth;
         private CallbackManager callbackManager;
         private FirebaseAuth.AuthStateListener mAuthStateListener;
         private static final int RC_SIGN_IN = 9001;
         private static final String TAG = LoginActivity.class.getName();
 
-    String email, userType;
+    String email, userType, deviceToken;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -168,8 +172,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         else
                         {
                             email =FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
+                            deviceToken = FirebaseInstanceId.getInstance().getToken();
+                            Log.d(TAG, "Firebase Token is : "+ FirebaseInstanceId.getInstance().getToken());
                             CallToPost();
+                            userType ="resident";
                             Intent intent = new Intent(LoginActivity.this,RegisteredUserActivity.class);
                             intent.putExtra("SignedInUser",email);
                             startActivity(intent);
@@ -190,6 +196,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         try {
             userDict.put("email",email);
             userDict.put("usertype",userType);
+            userDict.put("devicekey",deviceToken);
 
         }catch (JSONException ex){
             ex.printStackTrace();
@@ -249,8 +256,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                     email =FirebaseAuth.getInstance().getCurrentUser().getEmail();
                     CallToPost();
+                    userType="official";
                     Intent intent = new Intent(LoginActivity.this, OfficialActivity.class);
                     startActivity(intent);
+
+
+
 
                 }
 

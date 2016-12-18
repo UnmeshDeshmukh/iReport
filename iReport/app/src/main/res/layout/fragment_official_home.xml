@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_content_official"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewReportsOfficial"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mapButtonOfficial"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/mapview"
+        android:layout_gravity ="bottom|right"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/listViewReportsOfficial"
+        app:layout_anchorGravity="bottom|right|end"
+        />
+    <!--</LinearLayout>-->
+</android.support.design.widget.CoordinatorLayout>

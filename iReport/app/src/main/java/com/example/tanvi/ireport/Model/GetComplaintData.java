@@ -1,6 +1,11 @@
 package com.example.tanvi.ireport.Model;
 
 import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.example.tanvi.ireport.Utility.ImageLoadTask;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Unmesh on 12/4/2016.
@@ -9,6 +14,7 @@ public class GetComplaintData {
     private int id;
     private String descrition,priority,status,label,accesslevel,size,latitude,longitude,street,city,state,email,reported_by,created_at,updated_at,imageURL;
     private String image;
+    //private Bitmap image;
     
     public int getId() {
         return id;
@@ -148,10 +154,23 @@ public class GetComplaintData {
 
     public void setImage(String image) {
 
-        this.image = image;
+//        try {
+//            this.image = new ImageLoadTask().execute(image).get();
+//            Log.i("","Inside set image, image set to "+image);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+
+        this.image =image;
+
     }
 
     public String getImage() {
-        return image;
+
+        //return image;
+
+        return this.image;
     }
 }

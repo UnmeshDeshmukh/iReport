@@ -34,13 +34,15 @@ public class PostOperations extends AsyncTask<String,String,String> {
         try{
             URL url=null;
             if(task.equals("edituser")){
-                url = new URL("http://35.164.38.196:3333/edituser");
+                url = new URL("http://35.164.38.196:3332/edituser");
             }else if(task.equals("registercomplaint")){
-                url = new URL("http://35.164.38.196:3333/registercomplaint");
+                url = new URL("http://35.164.38.196:3332/registercomplaint");
             }else if(task.equals("changenotifications")){
-                url = new URL("http://35.164.38.196:3333/changenotifications");
+                url = new URL("http://35.164.38.196:3332/changenotifications");
             }else if(task.equals("user")){
-                url = new URL("http://35.164.38.196:3333/user");
+                url = new URL("http://35.164.38.196:3332/user");
+            }else if(task.equals("complaint")){
+                url = new URL("http://35.164.38.196:3332/changestatus");
             }
 
             httpURLConnection = (HttpURLConnection) url.openConnection();
